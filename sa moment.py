@@ -5,7 +5,6 @@ from time import sleep
 admins = [] # Тут юзер-айди
 bd = sqlite3.connect('base.db')
 cursor = bd.cursor()
-cursor.execute('CREATE TABLE IF NOT EXISTS users(status INT , id_user BIGINT PRIMARY KEY)')
 cursor.close()
 bd.close()
 bot = telebot.TeleBot('') # Тут суется токег
