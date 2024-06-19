@@ -22,6 +22,7 @@ def start(message):
 @bot.message_handler(commands=['help'])
 def help(message):
     bot.send_message(message.chat.id,'▶️ СПИСОК КОМАНД ДОСТУПНЫЙ ОБЫЧНЫМ ЮЗЕРАМ:\n/start - запуск бота \n /check  - проверет пользователя на доверие \n /help - выдаст список команд \n⚙️ СПИСОК КОМАНД ДОСТУПНЫЙ ДЛЯ АДМИНОВ:\n /add - добавит юзера в базу \n /addad - добавит юзера в админы \n /del - удалит из базы данных пользователя\n /delad - удалить админа (только создатель)')
+
 @bot.message_handler(commands=['add'])
 def add_base(message):
     if message.from_user.id in admins:
@@ -29,6 +30,7 @@ def add_base(message):
         bot.register_next_step_handler(a12,add)
     else:
         bot.send_message(message.chat.id, '❎ Недостаточно прав для данной команды.')
+
 def add(message):
     global ids
     ids = message.text
@@ -40,6 +42,7 @@ def add(message):
     markup.add(btn3)
     changer = bot.send_message(message.chat.id, 'Заносим как?',reply_markup=markup)
     bot.register_next_step_handler(changer,vnos)
+
 def vnos(message):
     global status1
     if message.text == '🥉Гарант🥉':
@@ -59,6 +62,9 @@ def vnos(message):
         bot.send_message(message.chat.id, '✅ Пользователь добавлен в базу.')
     except:
         bot.send_message(message.chat.id,'❎ Вы не правильно указали ID пользователя')
+
+
+
 @bot.message_handler(commands=['addad'])
 def add_base(message):
     if message.from_user.id in admins:
@@ -66,6 +72,7 @@ def add_base(message):
         bot.register_next_step_handler(adminka,add_base1)
     else:
         bot.send_message(message.chat.id, '❎ Недостаточно прав для данной команды.')
+
 def add_base1(message):
     try:
         b1=int(message.text)
@@ -73,6 +80,9 @@ def add_base1(message):
         bot.send_message(message.chat.id, f' Пользователю с id {b1} выданы права админа.')
     except:
         bot.send_message(message.chat.id,'❎ Вы не правильно указали ID пользователя')
+
+
+
 @bot.message_handler(commands=['check'])
 def check1(message):
     check2 = bot.send_message(message.chat.id, 'Напиши айди')
@@ -104,6 +114,9 @@ def check3(message):
                 bot.edit_message_text(f'🆔ID:{id_check}\n🌌Является обычным пользователем.', message.chat.id, old_message.message_id)
     except:
         bot.send_message(message.chat.id, '❎ Вы не правильно указали ID пользователя')
+
+
+
 @bot.message_handler(commands=['del'])
 def delete1(message):
     if message.from_user.id in admins:
@@ -123,6 +136,8 @@ def d2(message):
         bot.send_message(message.chat.id,'✅ Удален с базы данных.')
     except:
         bot.send_message(message.chat.id, '❎ Вы не правильно указали ID пользователя')
+
+
 @bot.message_handler(commands=['delad'])
 def delete_admin(message):
     if message.from_user.id == 12345 : # Вместо 12345 свой юзер айди
@@ -137,4 +152,7 @@ def da22(message):
         bot.send_message(message.chat.id,'✅ Права админа сняты')
     except:
         bot.send_message(message.chat.id, '❎ Вы не правильно указали ID пользователя/Нету в админах')
+
+
+
 bot.infinity_polling()
